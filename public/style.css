@@ -1,10 +1,31 @@
 * {
     box-sizing: border-box;
-    border: 1px solid red;
+    font-family: 'Lato', sans-serif;
+    /* border: 1px solid red; */
 }
 
 body {
-    background-color: #717171;
+    background-color: #A2B7C6;
+    color: #161925;
+}
+
+.bookmark-btn-wrapper{
+    display: flex;
+    justify-content: right;
+}
+
+.bookmark-btn {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit
+}
+
+a:visited {
+    color: #1D3557;
 }
 
 .page-wrapper {
@@ -12,13 +33,25 @@ body {
     margin: auto;
 }
 
+.ui-card-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
 .ui-card {
-    background-color: #222222;
+    background-color: #FFFFFF;
     border-radius: 10px;
     overflow: hidden;
-    color: white;
     max-width: 400px;
-    margin: 0 0 2% 0;
+    border: 2px solid #6096BA;
+}
+
+.image-wrapper {
+    height: 350px;
+}
+
+.image-wrapper > img {
+    height: 100%;
 }
 
 .ui-card > img {
@@ -32,22 +65,16 @@ body {
 }
 
 .ui-card #bottom  {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
 }
 
 .ui-card #bottom button {
     background-color: transparent;
-    color: white;
+    /* color: white; */
 }
 
 .ui-card p {
     text-align: justify;
-}
-
-.ui-card a:visited {
-    color: white;
 }
 
 .content {
@@ -134,8 +161,9 @@ body {
 .random-mangas {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
 }
 
-.alphabet {
+.alphabet-navigation {
     text-align: center;
 }

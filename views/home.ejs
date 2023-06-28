@@ -31,8 +31,9 @@
 
   <a href="">My List</a>
   <a href="/manga/all">View All Mangas</a>
-  <form action="" method="POST">
-    <input type="text" name="search" value="search">
+
+  <form action="/manga/search">
+    <input type="text" name="search">
     <button>Search</button>
   </form>
 
@@ -40,7 +41,9 @@
   <% for (let manga of mangas) { %>
     <div class="top-manga ui-card">
       <section id="top">
-        <img src="<%= manga.image_url %>" alt="">
+        <div class="image-wrapper">
+          <img src="<%= manga.image_url %>" alt="">
+        </div>
       </section>
       <section class="content" id="bottom">
         <h3><a href="/manga/<%= manga.id %>"><%= manga.title %></a><h3>

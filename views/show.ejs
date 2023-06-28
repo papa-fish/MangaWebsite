@@ -1,19 +1,21 @@
-<div class="ui-card content">
-    <section id="top">
-        <img src="<%= manga.image_url %>" alt="">
-    </section>
-    <section class="content" id="bottom">
-        <span>
-            <h3><%= manga.title %></h3>
-        </span>
-        <span>
-            <h3>"Author Name"</h3>
-        </span>
-        <span>
-            <button style="font-size:36px"><i class="fa fa-bookmark-o"></i></button>
-            <!-- <i style="font-size: 36px" class="fa">&#xf097;</i> -->
-        </span>
-    </section>
-    <p><%= manga.synopsis %></p>
-    <a href="">More by "Author Name"</a>
+<div class="ui-card-wrapper">
+    <div class="ui-card content">
+        <form class="bookmark-btn-wrapper" action="/manga/<%= manga.id %>/bookmark" method="POST">
+            <button class="bookmark-btn"><img src="<%= isBookmarked ? '/images/bookmark-fill.svg' : '/images/bookmark.svg' %>"></button>
+        </form>
+        <section id="top">
+            <img src="<%= manga.image_url %>" alt="">
+        </section>
+        <section class="content" id="bottom">
+            <span>
+                <h3><%= manga.title %></h3>
+            </span>
+            <span>
+                <h3>"Author Name"</h3>
+            </span>
+                
+        </section>
+        <p><%= manga.synopsis %></p>
+        <a href="">More by "Author Name"</a>
+    </div>
 </div>
