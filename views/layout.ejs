@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Mango DB</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Mango DB</a>
+
+        <% if (userId) { %>
+            <form action="/logout" method="POST">
+                <input type="hidden" name="_method" value="delete">
+                <button>Logout</button>
+            </form>
+        <% } else { %>
+            <a href="/login">Login</a> |
+        <% } %>
+
+        <% if (userId) { %>
+            <p>
+                Logged in as <%= user.username %>
+            </p>
+        <% } else { %>
+            <a href="/signup">Sign Up</a>
+        <% } %>
+    </nav>
+
+    <%- body %>
+
+    <script src="/app.js"></script>
+</body>
+</html>
