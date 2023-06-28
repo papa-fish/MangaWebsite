@@ -1,2 +1,31 @@
-<h1>all manga</h1>
+<h1>Search Manga by Alphabet</h1>
 
+<section class="alphabet">
+    <% let alphabet = []; %>
+    <% for (let letterCode = 65; letterCode <= 90; letterCode++) { %>
+        <% const letter = String.fromCharCode(letterCode) %>
+        <span><a id="<%=letter %>" href=""><%= letter %></a></span>
+    <% } %>
+</section>
+
+<% let currentLetter = ""; %>
+<h1>All Mangas</h1>
+<% for (let i = 0; i < mangas.length; i++) { %>
+    <% const manga = mangas[i] %>
+    <% const firstLetter = manga.firstLetter %>
+    
+    <% if (firstLetter !== currentLetter) { %>
+        <% currentLetter = firstLetter %>
+        <% if (i !== 0) { %>
+            %></ul>
+        <% } %>
+        <h2>Titles Starting with "<%= currentLetter %>":</h2>
+        <ul>
+    <% } %>
+
+    <li><a href="/manga/<%= mangas[i].id %>"><%= manga.title %></a></li>
+<% } %>
+
+<% if (mangas.length > 0) { %>
+    </ul>
+<% } %>

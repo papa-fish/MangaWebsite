@@ -4,7 +4,7 @@ const db = require("../database/index.js");
 
 router.get("/", (req, res) => {
 
-    db.query(`SELECT * FROM mangas ORDER BY id;`, (err, dbRes) => {
+    db.query(`SELECT * FROM mangas ORDER BY random() limit 8;`, (err, dbRes) => {
         if (err) {
             console.log(err)
         }

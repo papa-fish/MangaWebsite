@@ -29,15 +29,23 @@
     <span class="dot" onclick="currentSlide(3)"></span>
   </div>
 
-<% for (let manga of mangas) { %>
-  <div class="top-manga ui-card">
-  <section id="top">
-    <img src="<%= manga.image_url %>" alt="">
-  </section>
-  <section class="content" id="bottom">
-      <h3><a href="/manga/<%= manga.id %>"><%= manga.title %></a><h3>
-      <h3>"Author Name"</h3>
-      <button style="font-size:36px"><i class="fa fa-bookmark-o"></i></button>
-    </section>
-  </div>
-<% } %>
+  <a href="">My List</a>
+  <a href="/manga/all">View All Mangas</a>
+  <form action="" method="POST">
+    <input type="text" name="search" value="search">
+    <button>Search</button>
+  </form>
+
+<section class="random-mangas">
+  <% for (let manga of mangas) { %>
+    <div class="top-manga ui-card">
+      <section id="top">
+        <img src="<%= manga.image_url %>" alt="">
+      </section>
+      <section class="content" id="bottom">
+        <h3><a href="/manga/<%= manga.id %>"><%= manga.title %></a><h3>
+        <h3>"Author Name"</h3>
+      </section>
+    </div>
+  <% } %>
+</section>

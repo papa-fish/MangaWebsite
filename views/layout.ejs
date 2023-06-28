@@ -8,28 +8,31 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <nav>
-        <a href="/">Mango DB</a>
+    <div class="page-wrapper">
+        <nav>
+            <a href="/">Mango DB</a>
 
-        <% if (userId) { %>
-            <form action="/logout" method="POST">
-                <input type="hidden" name="_method" value="delete">
-                <button>Logout</button>
-            </form>
-        <% } else { %>
-            <a href="/login">Login</a> |
-        <% } %>
+            <% if (userId) { %>
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_method" value="delete">
+                    <button>Logout</button>
+                </form>
+            <% } else { %>
+                <a href="/login">Login</a> |
+            <% } %>
 
-        <% if (userId) { %>
-            <p>
-                Logged in as <%= user.username %>
-            </p>
-        <% } else { %>
-            <a href="/signup">Sign Up</a>
-        <% } %>
-    </nav>
+            <% if (userId) { %>
+                <p>
+                    Logged in as <%= user.username %>
+                </p>
+            <% } else { %>
+                <a href="/signup">Sign Up</a>
+            <% } %>
+        </nav>
 
-    <%- body %>
+        <%- body %>
+
+    </div>    
 
     <script src="/app.js"></script>
 </body>
