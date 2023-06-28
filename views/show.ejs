@@ -1,7 +1,13 @@
 <div class="ui-card-wrapper">
     <div class="ui-card content">
+    <% if (isBookmarked) { %>
+        <form class="bookmark-btn-wrapper" action="/manga/<%= manga.id %>/unbookmark" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <button class="bookmark-btn"><img src="/images/bookmark-fill.svg" alt=""></button>
+    <% } else { %>
         <form class="bookmark-btn-wrapper" action="/manga/<%= manga.id %>/bookmark" method="POST">
-            <button class="bookmark-btn"><img src="<%= isBookmarked ? '/images/bookmark-fill.svg' : '/images/bookmark.svg' %>"></button>
+        <button class="bookmark-btn"><img src="/images/bookmark.svg" alt=""></button>
+    <% } %>
         </form>
         <section id="top">
             <img src="<%= manga.image_url %>" alt="">
@@ -19,3 +25,6 @@
         <a href="">More by "Author Name"</a>
     </div>
 </div>
+
+
+

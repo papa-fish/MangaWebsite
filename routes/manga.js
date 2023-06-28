@@ -93,4 +93,15 @@ router.post("/:id/bookmark", ensureLoggedIn, (req, res) => {
     })
 });
 
+router.delete("/:id/unbookmark", ensureLoggedIn, (req, res) => {
+    const userId = req.session.userId
+    const sql = `DELETE FROM bookmarks WHERE user_id = $1 AND manga_id = $2;`
+    db.query(sql, [userId, req.params.id], (err, dbRes) => {
+        if (err) {
+            console.log(err)
+        }
+        res.redirect(`/manga/${req.params.id}`)
+    })
+});
+
 module.exports = router;
