@@ -9,6 +9,16 @@ body {
     color: #161925;
 }
 
+nav {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+nav span {
+    font-size: 48px;
+}
+
 .bookmark-btn-wrapper{
     display: flex;
     justify-content: right;
@@ -78,6 +88,35 @@ a:visited {
 
 .content {
     padding: 2%;
+}
+
+.random-mangas {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.alphabet-navigation {
+    text-align: center;
+}
+
+.new-manga-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    background-color: #6096BA;
+    color: #FFFFFF;
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+}
+
+.input-fld {
+    padding: 0.5rem 1rem;
 }
 
 .slideshow-container {
@@ -155,14 +194,4 @@ a:visited {
 @keyframes fade {
     from {opacity: .2}
     to {opacity: 1}
-}
-
-.random-mangas {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 10px;
-}
-
-.alphabet-navigation {
-    text-align: center;
 }

@@ -9,17 +9,16 @@
 <body>
     <div class="page-wrapper">
         <nav>
-            <a href="/">Mango DB</a>
+            <a href="/"><span>Mango DB</span></a>
 
             <% if (userId) { %>
                 <form action="/logout" method="POST">
                     <input type="hidden" name="_method" value="delete">
-                    <button>Logout</button>
+                    <button class="btn">Logout</button>
                 </form>
             <% } else { %>
-                <a href="/login">Login</a> |
+                <a href="/login">Login</a>
             <% } %>
-
             <% if (userId) { %>
                 <p>
                     Logged in as <%= user.username %>
