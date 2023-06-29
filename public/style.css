@@ -115,12 +115,16 @@ a:visited {
     border-top: 2px solid #1D3557;
 }
 
-.random-mangas {
+.random-mangas, .my-bookmarked-mangas {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 10px;
+    gap: 50px;
     justify-content: center;
     margin: 0 auto;
+}
+
+.my-bookmarked-mangas {
+    margin-top: 20px;
 }
 
 .alphabet-navigation {
@@ -138,11 +142,11 @@ a:visited {
     line-height: 2;
 }
 
-.show-all-header {
+.header {
     border-bottom: 2px solid #1D3557;
 }
 
-.show-all-header h1 {
+.header h1 {
     text-align: center;
     text-decoration: underline;
 }

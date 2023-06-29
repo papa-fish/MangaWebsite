@@ -3,7 +3,7 @@
 
 Introducing **Mango DB**: Your one-stop solution to manage and expand your manga collection effortlessly. Create, update, and organize your bookmarked mangas all in one place!
 
-[render link](https://mango-db-do1p.onrender.com/)
+[Mango DB Website](https://mango-db-do1p.onrender.com/)
 
 ## Technologies Used
 
