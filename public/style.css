@@ -109,7 +109,7 @@ a:visited {
     padding: 2%;
 }
 
-.edit-link {
+.footer {
     margin-top: 20px;
     text-align: center;
     border-top: 2px solid #1D3557;
@@ -130,16 +130,11 @@ a:visited {
     padding: 0 0 20px 0;
 }
 
-.new-manga-wrapper {
-    display: flex;
-    align-items: center;
-}
-
-.login-wrapper, .signup-wrapper {
+.form-wrappers {
     text-align: center;
 }
 
-.login-wrapper label, .signup-wrapper label {
+.form-wrappers label {
     line-height: 2;
 }
 
@@ -150,6 +145,13 @@ a:visited {
 .show-all-header h1 {
     text-align: center;
     text-decoration: underline;
+}
+
+textarea {
+    display: block;
+    max-width: 500px;
+    max-height: 400px;
+    margin: 0 auto 1rem;
 }
 
 .btn {

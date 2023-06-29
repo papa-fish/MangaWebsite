@@ -1,12 +1,13 @@
-<h2>Update <%= manga.title %></h2>
-
-<form class="edit-manga-wrapper" action="/manga/<%= manga.id %>" method="POST">
-    <input type="hidden" name="_method" value="PUT">
-    <label for="">Title</label>
-    <input class="input-fld" type="text" name="title">
-    <label for="">Image URL</label>
-    <input class="input-fld" type="text" name="image_url">
-    <label for="">Synopsis</label>
-    <textarea name="synopsis" cols="76" rows="10"></textarea>
-    <button class="btn">Update <%= manga.title %></button>
-</form>
+<div class="form-wrappers">
+    <h2>Update <%= manga.title %></h2>
+    <form action="/manga/<%= manga.id %>" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <label for="">Title</label>
+        <input class="input-fld" type="text" name="title">
+        <label for="">Image URL</label>
+        <input class="input-fld" type="text" name="image_url">
+        <label for="">Synopsis</label>
+        <textarea name="synopsis" cols="76" rows="10"></textarea>
+        <button class="btn">Update <%= manga.title %></button>
+    </form>
+</div>
