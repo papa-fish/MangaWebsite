@@ -3,11 +3,11 @@
     <form action="/manga/<%= manga.id %>" method="POST">
         <input type="hidden" name="_method" value="PUT">
         <label for="">Title</label>
-        <input class="input-fld" type="text" name="title">
+        <input class="input-fld" type="text" name="title" value="<%= manga.title %>">
         <label for="">Image URL</label>
-        <input class="input-fld" type="text" name="image_url">
+        <input class="input-fld" type="text" name="image_url" value="<%= manga.image_url %>">
         <label for="">Synopsis</label>
-        <textarea name="synopsis" cols="76" rows="10"></textarea>
+        <textarea name="synopsis" cols="76" rows="10"><%= manga.synopsis %></textarea>
         <button class="btn">Update <%= manga.title %></button>
     </form>
 </div>
