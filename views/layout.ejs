@@ -10,21 +10,20 @@
     <div class="page-wrapper">
         <nav>
             <a href="/"><span>Mango DB</span></a>
-
             <% if (userId) { %>
-                <form action="/logout" method="POST">
-                    <input type="hidden" name="_method" value="delete">
-                    <button class="btn">Logout</button>
-                </form>
+            <form action="/logout" method="POST">
+                <input type="hidden" name="_method" value="delete">
+                <button class="btn">Logout</button>
+            </form>
             <% } else { %>
-                <a href="/login">Login</a>
+            <a class="margin-left" href="/login">Login</a>
             <% } %>
             <% if (userId) { %>
-                <p>
-                    Logged in as <%= user.username %>
-                </p>
+            <p class="margin-left">
+                Logged in as <%= user.username %>
+            </p>
             <% } else { %>
-                <a href="/signup">Sign Up</a>
+            <a href="/signup">Sign Up</a>
             <% } %>
         </nav>
 

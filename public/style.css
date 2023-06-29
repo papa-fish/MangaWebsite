@@ -11,17 +11,33 @@ body {
 
 nav {
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
+}
+
+.margin-left {
+    margin-left: auto;
+    padding: 0 10px 0 0;
 }
 
 nav span {
     font-size: 48px;
 }
 
+.home-pg-links-container {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+    border-bottom: 2px solid #1D3557;
+}
+
 .bookmark-btn-wrapper{
     display: flex;
     justify-content: right;
+}
+
+.max-width-card {
+    max-width: 400px;
 }
 
 .bookmark-btn {
@@ -52,7 +68,6 @@ a:visited {
     background-color: #FFFFFF;
     border-radius: 10px;
     overflow: hidden;
-    max-width: 400px;
     border: 2px solid #6096BA;
 }
 

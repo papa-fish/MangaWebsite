@@ -1,5 +1,5 @@
 <div class="ui-card-wrapper">
-    <div class="ui-card content">
+    <div class="ui-card content max-width-card">
     <% if (isBookmarked) { %>
         <form class="bookmark-btn-wrapper" action="/manga/<%= manga.id %>/unbookmark" method="POST">
         <input type="hidden" name="_method" value="DELETE">
@@ -27,4 +27,3 @@
 </div>
 
 <h2><a href="/manga/<%= manga.id %>/edit">Does something not look right? Edit it here!</a></h2>
-
