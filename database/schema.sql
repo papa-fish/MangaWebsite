@@ -11,13 +11,19 @@ CREATE TABLE mangas (
     id SERIAL PRIMARY KEY,
     title TEXT,
     image_url TEXT,
-    synopsis TEXT
+    synopsis TEXT,
+    author TEXT
 );
 
 CREATE TABLE bookmarks (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
     manga_id INTEGER
+);
+
+CREATE TABLE authors (
+    id SERIAL PRIMARY KEY,
+    name TEXT
 );
 
 INSERT INTO mangas (title, image_url, synopsis)
@@ -49,3 +55,15 @@ VALUES ('Grand Blue', 'https://cdn.myanimelist.net/images/manga/2/166124.jpg', '
 
 INSERT INTO mangas (title, image_url, synopsis)
 VALUES ('Oyasumi Punpun', 'https://cdn.myanimelist.net/images/manga/3/266834.jpg', 'Punpun Onodera is a normal 11-year-old boy living in Japan. Hopelessly idealistic and romantic, Punpun begins to see his life take a subtle—though nonetheless startling—turn to the adult when he meets the new girl in his class, Aiko Tanaka. It is then that the quiet boy learns just how fickle maintaining a relationship can be, and the surmounting difficulties of transitioning from a naïve boyhood to a convoluted adulthood. When his father assaults his mother one night, Punpun realizes another thing: those whom he looked up to were not as impressive as he once thought. As his problems increase, Punpun''s once shy demeanor turns into voluntary reclusiveness. Rather than curing him of his problems and conflicting emotions, this merely intensifies them, sending him down the dark path of maturity in this grim coming-of-age saga.');
+
+UPDATE mangas SET author = 'Kentarou Miura' WHERE title = 'Beserk';
+UPDATE mangas SET author = 'Hirohiko Araki' WHERE title = 'Jojo''s Bizzare Adventure';
+UPDATE mangas SET author = 'Takehiko Inoue' WHERE title = 'Vagabond';
+UPDATE mangas SET author = 'Eiichiro Oda' WHERE title = 'One Piece';
+UPDATE mangas SET author = 'Naoki Urasawa' WHERE title = 'Monster';
+UPDATE mangas SET author = 'Takehiko Inoue' WHERE title = 'Slam Dunk';
+UPDATE mangas SET author = 'Hiromu Arakawa' WHERE title = 'Fullmetal Alchemist';
+UPDATE mangas SET author = 'Makoto Yukimura' WHERE title = 'Vinland Saga';
+UPDATE mangas SET author = 'Kenji Inoue' WHERE title = 'Grand Blue';
+UPDATE mangas SET author = 'Inio Asano' WHERE title = 'Oyasumi Punpun';
+UPDATE mangas SET author = 'Gege Akumtai' WHERE title = 'Jujutsu Kaisen';

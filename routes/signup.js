@@ -37,7 +37,6 @@ router.post("/", (req, res) => {
                         if (err) {
                             console.log(err)
                         } else {
-                            console.log("new user created")
                             res.redirect("/login")
                         }
                     })
