@@ -47,13 +47,25 @@ router.get("/search", ensureLoggedIn, (req, res) => {
             console.log(err)
         }
         if (dbRes.rows.length === 0) {
-            res.redirect("/")
-        } else {
-            let manga = dbRes.rows[0]
-            res.render("show", {
-                manga         
+            return res.render("home", {
+                mangas: []
             })
         }
+        let manga = dbRes.rows[0]
+        const bookmarksSql = `SELECT user_id, manga_id FROM bookmarks WHERE user_id = $1 AND manga_id = $2;`
+        db.query(bookmarksSql, [req.session.userId, manga.id], (err, dbRes) => {
+            if (err) {
+                console.log(err)
+            }
+            let isBookmarked = false
+            if (dbRes.rows.length > 0) {
+                isBookmarked = true
+            }
+            res.render("show", {
+                manga,
+                isBookmarked         
+            })
+        })
     })
 });
 

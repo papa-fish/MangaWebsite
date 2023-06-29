@@ -1,23 +1,19 @@
-<h1>Search Manga by Alphabet</h1>
-
-<h2>
-    <a href="/manga/new">Can't find what you're looking for? Add it yourself!</a>
-</h2>
-
-<div class="alphabet-navigation">
+<header class="show-all-header">
+    <h1>Search Manga by Alphabet</h1>
+    <div class="alphabet-navigation">
     <% let alphabet = []; %>
     <% for (let letterCode = 65; letterCode <= 90; letterCode++) { %>
         <% const letter = String.fromCharCode(letterCode) %>
         <span><a href="#<%=letter %>"><%= letter %></a></span>
-    <% } %>
+        <% } %>
     </div>
+</header>
 
 <% let currentLetter = ""; %>
 <h1>All Mangas</h1>
 <% for (let i = 0; i < mangas.length; i++) { %>
     <% const manga = mangas[i] %>
     <% const firstLetter = manga.firstLetter %>
-    
     <% if (firstLetter !== currentLetter) { %>
         <% currentLetter = firstLetter %>
         <% if (i !== 0) { %>
@@ -33,3 +29,7 @@
 <% if (mangas.length > 0) { %>
     </ul>
 <% } %>
+
+<h2>
+    <a href="/manga/new">Can't find what you're looking for? Add it yourself!</a>
+</h2>

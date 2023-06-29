@@ -13,17 +13,14 @@
             <img src="<%= manga.image_url %>" alt="">
         </section>
         <section class="content" id="bottom">
-            <span>
-                <h3><%= manga.title %></h3>
-            </span>
-            <span>
-                <h3>"Author Name"</h3>
-            </span>
-                
+            <span><h3><%= manga.title %></h3></span>
+            <span><h3>"Author Name"</h3></span>     
         </section>
         <p><%= manga.synopsis %></p>
         <a href="">More by "Author Name"</a>
     </div>
 </div>
 
-<h2><a href="/manga/<%= manga.id %>/edit">Does something not look right? Edit it here!</a></h2>
+<div class="edit-link">
+    <h2><a href="/manga/<%= manga.id %>/edit">Does something not look right? Edit it here!</a></h2>
+</div>
