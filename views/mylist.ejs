@@ -1,0 +1,15 @@
+<section class="random-mangas">
+    <% for (let manga of mangas) { %>
+      <div class="top-manga ui-card">
+        <section id="top">
+          <div class="image-wrapper">
+            <img src="<%= manga.image_url %>" alt="">
+          </div>
+        </section>
+        <section class="content" id="bottom">
+          <h3><a href="/manga/<%= manga.id %>"><%= manga.title %></a><h3>
+          <h3>"Author Name"</h3>
+        </section>
+      </div>
+    <% } %>
+  </section>

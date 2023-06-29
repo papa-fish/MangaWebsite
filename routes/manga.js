@@ -7,7 +7,7 @@ router.get("/new", (req, res) => {
     res.render("new")
 });
 
-router.post("/new", (req, res) => {
+router.post("/new", ensureLoggedIn, (req, res) => {
     let title = req.body.title
     let imageUrl = req.body.image_url
     let synopsis = req.body.synopsis
@@ -39,7 +39,7 @@ router.get("/all", (req, res) => {
     })
 });
 
-router.get("/search", (req, res) => {
+router.get("/search", ensureLoggedIn, (req, res) => {
     let search = req.query.search
     const sql = `SELECT * FROM mangas WHERE title ILIKE '%${search}%' LIMIT 1;`
     db.query(sql, (err, dbRes) => {
@@ -52,6 +52,24 @@ router.get("/search", (req, res) => {
             let manga = dbRes.rows[0]
             res.render("show", {
                 manga         
+            })
+        }
+    })
+});
+
+router.get("/mylist", ensureLoggedIn, (req, res) => {
+    let userId = req.session.userId
+    const sql = `SELECT m.* FROM mangas m JOIN bookmarks b ON m.id = b.manga_id WHERE b.user_id = $1;`
+    db.query(sql, [userId], (err, dbRes) => {
+        if (err) {
+            console.log(err)
+        }
+        const mangas = dbRes.rows
+        if (mangas === 0) {
+            res.redirect("/")
+        } else {
+            res.render("mylist", {
+                mangas
             })
         }
     })
@@ -70,7 +88,6 @@ router.get("/:id", ensureLoggedIn, (req, res) => {
                 console.log(err)
             }
             let isBookmarked = false
-            console.log(dbRes.rows)
             if (dbRes.rows.length > 0) {
                 isBookmarked = true;
             }
