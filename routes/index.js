@@ -3,8 +3,8 @@ const router = express.Router();
 const db = require("../database/index.js");
 
 router.get("/", (req, res) => {
-
-    db.query(`SELECT * FROM mangas ORDER BY random() limit 8;`, (err, dbRes) => {
+    const sql = `SELECT m.*, a.name AS author_name FROM mangas m JOIN authors a ON m.author_id = a.id ORDER BY random() limit 8;`
+    db.query(sql, (err, dbRes) => {
         if (err) {
             console.log(err)
         }

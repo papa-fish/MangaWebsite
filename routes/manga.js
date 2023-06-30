@@ -8,22 +8,26 @@ router.get("/new", ensureLoggedIn, (req, res) => {
 });
 
 router.post("/new", ensureLoggedIn, (req, res) => {
-    let title = req.body.title
-    let author = req.body.author
-    let imageUrl = req.body.image_url
-    let synopsis = req.body.synopsis
-    let formattedSynopsis = synopsis.replace(" ' ", " '' ");
-    const sql = `INSERT INTO mangas (title, author, image_url, synopsis) VALUES ($1, $2, $3, $4) RETURNING id;`
-    db.query(sql, [title, author, imageUrl, formattedSynopsis], (err, dbRes) => {
-        if (err) {
-            console.log(err)
-        }
-        res.redirect("/")
-    })
-});
+    const { title, author, image_url, synopsis } = req.body;
+    db.query(`INSERT INTO authors (name) VALUES ($1) ON CONFLICT (name) DO NOTHING`, [author])
+      .then(() => {
+        return db.query(`SELECT id FROM authors WHERE name = $1`, [author]);
+      })
+      .then((dbRes) => {
+        const authorId = dbRes.rows[0].id;
+        return db.query(`INSERT INTO mangas (title, author_id, image_url, synopsis) VALUES ($1, $2, $3, $4)`, [title, authorId, image_url, synopsis]);
+      })
+      .then(() => {
+        res.redirect("/");
+      })
+      .catch((err) => {
+        console.error("Error inserting data:", err);
+        res.status(500).send("An error occurred while inserting data");
+      });
+  });
 
 router.get("/all", (req, res) => {
-    const sql = `SELECT title, id FROM mangas ORDER BY title`
+    const sql = `SELECT * FROM mangas ORDER BY title`
     db.query(sql, (err, dbRes) => {
         if (err) {
             console.log(err)
@@ -41,8 +45,8 @@ router.get("/all", (req, res) => {
 
 router.get("/search", ensureLoggedIn, (req, res) => {
     let search = req.query.search
-    const sql = `SELECT * FROM mangas WHERE title ILIKE '%${search}%' LIMIT 1;`
-    db.query(sql, (err, dbRes) => {
+    const sql = `SELECT m.*, a.name AS author_name FROM mangas m JOIN authors a ON m.author_id = a.id WHERE m.title ILIKE '%' || $1 || '%' LIMIT 1;`
+    db.query(sql, [search], (err, dbRes) => {
         if (err) {
             console.log(err)
         }
@@ -52,6 +56,7 @@ router.get("/search", ensureLoggedIn, (req, res) => {
             })
         }
         let manga = dbRes.rows[0]
+        console.log(manga)
         const bookmarksSql = `SELECT user_id, manga_id FROM bookmarks WHERE user_id = $1 AND manga_id = $2;`
         db.query(bookmarksSql, [req.session.userId, manga.id], (err, dbRes) => {
             if (err) {
@@ -71,7 +76,7 @@ router.get("/search", ensureLoggedIn, (req, res) => {
 
 router.get("/mylist", ensureLoggedIn, (req, res) => {
     let userId = req.session.userId
-    const sql = `SELECT m.* FROM mangas m JOIN bookmarks b ON m.id = b.manga_id WHERE b.user_id = $1;`
+    const sql = `SELECT m.*, a.name AS author_name, b.* FROM mangas m JOIN authors a ON m.author_id = a.id JOIN bookmarks b ON m.id = b.manga_id WHERE b.user_id = $1;`
     db.query(sql, [userId], (err, dbRes) => {
         if (err) {
             console.log(err)
@@ -88,16 +93,16 @@ router.get("/mylist", ensureLoggedIn, (req, res) => {
 });
 
 router.get("/:id", ensureLoggedIn, (req, res) => {
-    const mangasSql = `SELECT * FROM mangas WHERE id = $1;`
+    const mangasSql = `SELECT m.*, a.name AS author_name FROM mangas m JOIN authors a ON m.author_id = a.id WHERE m.id = $1`;
     db.query(mangasSql, [req.params.id], (err, dbRes) => {
         if (err) {
-            console.log(err)
+            return console.log(err)
         }
         let manga = dbRes.rows[0]
-        const bookmarksSql = `SELECT user_id, manga_id FROM bookmarks WHERE user_id = $1 AND manga_id = $2;`
-        db.query(bookmarksSql, [req.session.userId, manga.id], (err, dbRes) => {
+        const bookmarksSql = `SELECT b.user_id, b.manga_id, $1 AS author_name FROM bookmarks b WHERE b.user_id = $2 AND b.manga_id = $3`
+        db.query(bookmarksSql, [manga.author, req.session.userId, manga.id], (err, dbRes) => {
             if (err) {
-                console.log(err)
+               return console.log(err)
             }
             let isBookmarked = false
             if (dbRes.rows.length > 0) {
@@ -112,12 +117,14 @@ router.get("/:id", ensureLoggedIn, (req, res) => {
 });
 
 router.get("/:id/edit", ensureLoggedIn, (req, res) => {
-    const sql = `SELECT * FROM mangas WHERE id = $1`
-    db.query(sql, [req.params.id], (err, dbRes) => {
+    const mangaId = req.params.id
+    const sql = `SELECT m.*, a.name AS author_name FROM mangas m JOIN authors a ON m.author_id = a.id WHERE m.id = $1;`
+    db.query(sql, [mangaId], (err, dbRes) => {
         if (err) {
-            console.log(err)
+            return console.log(err)
         }
         let manga = dbRes.rows[0]
+        const authorId = manga.author_id;
         res.render("edit", {
             manga
         })
@@ -125,16 +132,23 @@ router.get("/:id/edit", ensureLoggedIn, (req, res) => {
 });
 
 router.put("/:id", ensureLoggedIn, (req, res) => {
-    let title = req.body.title
-    let author = req.body.author
-    let imageUrl = req.body.image_url
-    let synopsis = req.body.synopsis
-    let formattedSynopsis = synopsis.replace(" ' ", " '' ");
-    const sql = `UPDATE mangas SET title = $1, author = $2 image_url = $3, synopsis = $4 WHERE id = $5;`
-    db.query(sql, [title, author, imageUrl, formattedSynopsis, req.params.id], (err, dbRes) => {
-        res.redirect(`/manga/${req.params.id}`)
-    })
-});
+    const mangaId = req.params.id;
+    const { title, author, image_url, synopsis } = req.body;
+    const updateAuthorQuery = `UPDATE authors SET name = $1 WHERE id = (SELECT author_id FROM mangas WHERE id = $2);`
+    db.query(updateAuthorQuery, [author, mangaId], (err, result) => {
+      if (err) {
+        return console.log(err);
+        return;
+      }
+      const updateMangaQuery = `UPDATE mangas SET title = $1, image_url = $2, synopsis = $3 WHERE id = $4;`
+      db.query(updateMangaQuery, [title, image_url, synopsis, mangaId], (err, dbRes) => {
+        if (err) {
+        return console.log(err);
+        }
+        res.redirect(`/manga/${mangaId}`);
+      });
+    });
+  });
 
 router.post("/:id/bookmark", ensureLoggedIn, (req, res) => {
     const userId = req.session.userId
@@ -159,3 +173,4 @@ router.delete("/:id/unbookmark", ensureLoggedIn, (req, res) => {
 });
 
 module.exports = router;
+

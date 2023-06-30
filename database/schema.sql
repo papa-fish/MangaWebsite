@@ -11,8 +11,7 @@ CREATE TABLE mangas (
     id SERIAL PRIMARY KEY,
     title TEXT,
     image_url TEXT,
-    synopsis TEXT,
-    author TEXT
+    synopsis TEXT
 );
 
 CREATE TABLE bookmarks (
@@ -25,6 +24,8 @@ CREATE TABLE authors (
     id SERIAL PRIMARY KEY,
     name TEXT
 );
+
+ALTER TABLE authors ADD CONSTRAINT unique_author_name UNIQUE (name);
 
 INSERT INTO mangas (title, image_url, synopsis)
 VALUES ('Beserk', 'https://cdn.myanimelist.net/images/manga/1/157897.jpg', 'Guts, a former mercenary now known as the "Black Swordsman," is out for revenge. After a tumultuous childhood, he finally finds someone he respects and believes he can trust, only to have everything fall apart when this person takes away everything important to Guts for the purpose of fulfilling his own desires. Now marked for death, Guts becomes condemned to a fate in which he is relentlessly pursued by demonic beings. Setting out on a dreadful quest riddled with misfortune, Guts, armed with a massive sword and monstrous strength, will let nothing stop him, not even death itself, until he is finally able to take the head of the one who stripped him—and his loved one—of their humanity.');
@@ -56,14 +57,30 @@ VALUES ('Grand Blue', 'https://cdn.myanimelist.net/images/manga/2/166124.jpg', '
 INSERT INTO mangas (title, image_url, synopsis)
 VALUES ('Oyasumi Punpun', 'https://cdn.myanimelist.net/images/manga/3/266834.jpg', 'Punpun Onodera is a normal 11-year-old boy living in Japan. Hopelessly idealistic and romantic, Punpun begins to see his life take a subtle—though nonetheless startling—turn to the adult when he meets the new girl in his class, Aiko Tanaka. It is then that the quiet boy learns just how fickle maintaining a relationship can be, and the surmounting difficulties of transitioning from a naïve boyhood to a convoluted adulthood. When his father assaults his mother one night, Punpun realizes another thing: those whom he looked up to were not as impressive as he once thought. As his problems increase, Punpun''s once shy demeanor turns into voluntary reclusiveness. Rather than curing him of his problems and conflicting emotions, this merely intensifies them, sending him down the dark path of maturity in this grim coming-of-age saga.');
 
-UPDATE mangas SET author = 'Kentarou Miura' WHERE title = 'Beserk';
-UPDATE mangas SET author = 'Hirohiko Araki' WHERE title = 'Jojo''s Bizzare Adventure';
-UPDATE mangas SET author = 'Takehiko Inoue' WHERE title = 'Vagabond';
-UPDATE mangas SET author = 'Eiichiro Oda' WHERE title = 'One Piece';
-UPDATE mangas SET author = 'Naoki Urasawa' WHERE title = 'Monster';
-UPDATE mangas SET author = 'Takehiko Inoue' WHERE title = 'Slam Dunk';
-UPDATE mangas SET author = 'Hiromu Arakawa' WHERE title = 'Fullmetal Alchemist';
-UPDATE mangas SET author = 'Makoto Yukimura' WHERE title = 'Vinland Saga';
-UPDATE mangas SET author = 'Kenji Inoue' WHERE title = 'Grand Blue';
-UPDATE mangas SET author = 'Inio Asano' WHERE title = 'Oyasumi Punpun';
-UPDATE mangas SET author = 'Gege Akumtai' WHERE title = 'Jujutsu Kaisen';
+INSERT INTO authors (name) VALUES ('Kentarou Miura');
+INSERT INTO authors (name) VALUES ('Hirohiko Araki');
+INSERT INTO authors (name) VALUES ('Takehiko Inoue');
+INSERT INTO authors (name) VALUES ('Eiichiro Oda');
+INSERT INTO authors (name) VALUES ('Naoki Urasawa');
+INSERT INTO authors (name) VALUES ('Takehiko Inoue');
+INSERT INTO authors (name) VALUES ('Hiromu Arakawa');
+INSERT INTO authors (name) VALUES ('Makoto Yukimura');
+INSERT INTO authors (name) VALUES ('Kenji Inoue');
+INSERT INTO authors (name) VALUES ('Inio Asano');
+INSERT INTO authors (name) VALUES ('Gege Akumtai');
+INSERT INTO authors (name) VALUES ('Yusuke Murata');
+INSERT INTO authors (name) VALUES ('Tatsuya Endou');
+
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Kentarou Miura') WHERE title = 'Beserk';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Eiichiro Oda') WHERE title = 'One Piece';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Naoki Urasawa') WHERE title = 'Monster';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Hiromu Arakawa') WHERE title = 'Fullmetal Alchemist';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Hirohiko Araki') WHERE title = 'Jojo''s Bizzare Adventure';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Makoto Yukimura') WHERE title = 'Vinland Saga';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Kenji Inoue') WHERE title = 'Grand Blue';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Inio Asano') WHERE title = 'Oyasumi Punpun';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Takehiko Inoue') WHERE title = 'Vagabond';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Takehiko Inoue') WHERE title = 'Slam Dunk';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Gege Akumtai') WHERE title = 'Jujutsu Kaisen';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Yusuke Murata') WHERE title = 'One Punch-Man';
+UPDATE mangas SET author_id = (SELECT id FROM authors WHERE name = 'Tatsuya Endou') WHERE title = 'Spy x Family';
